@@ -19,7 +19,7 @@
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
                             <div class="col-sm-10">
                                 <input type="text" name="name" class="form-control" id="basic-default-name"
-                                    placeholder="John Doe" />
+                                    placeholder="Nama" />
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -27,8 +27,7 @@
                             <div class="col-sm-10">
                                 <div class="input-group input-group-merge">
                                     <input name="email" type="text" id="basic-default-email" class="form-control"
-                                        placeholder="john.doe" aria-label="john.doe"
-                                        aria-describedby="basic-default-email2" />
+                                        placeholder="Email" aria-label="john.doe" aria-describedby="basic-default-email2" />
                                     <span class="input-group-text" id="basic-default-email2">@example.com</span>
                                 </div>
                                 <div class="form-text">You can use letters, numbers & periods</div>
@@ -58,7 +57,7 @@
                             <label class="col-sm-2 col-form-label" for="basic-default-phone">No KTP</label>
                             <div class="col-sm-10">
                                 <input name="no_ktp" type="text" id="basic-default-phone"
-                                    class="form-control phone-mask" placeholder="321" aria-label="658 799 8941"
+                                    class="form-control phone-mask" placeholder="No KTP" aria-label="658 799 8941"
                                     aria-describedby="basic-default-phone" />
                             </div>
                         </div>
@@ -66,7 +65,7 @@
                             <label class="col-sm-2 col-form-label" for="basic-default-phone">No Hp</label>
                             <div class="col-sm-10">
                                 <input name="no_hp" type="text" id="basic-default-phone"
-                                    class="form-control phone-mask" placeholder="089" aria-label="658 799 8941"
+                                    class="form-control phone-mask" placeholder="No Hp" aria-label="658 799 8941"
                                     aria-describedby="basic-default-phone" />
                             </div>
                         </div>

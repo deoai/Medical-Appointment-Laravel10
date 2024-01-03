@@ -8,6 +8,7 @@ use App\Models\Pasien;
 use App\Models\Poli;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -53,19 +54,23 @@ class AdminController extends Controller
     public function dokterUpdateProses(Request $request, $id)
     {
         $dokter = Dokter::where('id', $id)->first();
-        $dokter->update([
-            'id_poli' => $request->id_poli,
-            'nama' => $request->name,
-            'alamat' => $request->alamat,
-            'no_hp' => $request->no_hp,
-        ]);
-        $users = User::where('id', $dokter->id_akun)->first();
-        $users->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-        return redirect('admin/dokter');
+        if (Hash::check($request->old_password, $dokter->user->password)) {
+            $dokter->update([
+                'id_poli' => $request->id_poli,
+                'nama' => $request->name,
+                'alamat' => $request->alamat,
+                'no_hp' => $request->no_hp,
+            ]);
+            $users = User::where('id', $dokter->id_akun)->first();
+            $users->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->new_password),
+            ]);
+            return redirect('admin/dokter');
+        } else {
+            return redirect()->back()->with('error', 'Password lama tidak sesuai');
+        }
     }
 
     // DELETE DOKTER AS ADMIN
@@ -134,7 +139,6 @@ class AdminController extends Controller
         $users->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
         ]);
         return redirect('admin/pasien');
     }

@@ -19,7 +19,7 @@
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
                             <div class="col-sm-10">
                                 <input type="text" name="name" class="form-control" id="basic-default-name"
-                                    placeholder="John Doe" />
+                                    placeholder="Nama" />
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -27,8 +27,7 @@
                             <div class="col-sm-10">
                                 <div class="input-group input-group-merge">
                                     <input name="email" type="text" id="basic-default-email" class="form-control"
-                                        placeholder="john.doe" aria-label="john.doe"
-                                        aria-describedby="basic-default-email2" />
+                                        placeholder="Email" aria-label="john.doe" aria-describedby="basic-default-email2" />
                                     <span class="input-group-text" id="basic-default-email2">@example.com</span>
                                 </div>
                                 <div class="form-text">You can use letters, numbers & periods</div>
@@ -58,7 +57,7 @@
                             <label class="col-sm-2 col-form-label" for="basic-default-phone">No Hp</label>
                             <div class="col-sm-10">
                                 <input name="no_hp" type="text" id="basic-default-phone"
-                                    class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941"
+                                    class="form-control phone-mask" placeholder="No Hp" aria-label="658 799 8941"
                                     aria-describedby="basic-default-phone" />
                             </div>
                         </div>
@@ -87,7 +86,7 @@
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
                             <div class="col-sm-10">
                                 <input type="text" name="name" class="form-control" id="basic-default-name"
-                                    placeholder="John Doe" value="{{ $dokters->nama }}" />
+                                    placeholder="Dr Deo" value="{{ $dokters->nama }}" />
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -95,7 +94,7 @@
                             <div class="col-sm-10">
                                 <div class="input-group input-group-merge">
                                     <input name="email" type="text" id="basic-default-email" class="form-control"
-                                        placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-default-email2"
+                                        placeholder="email" aria-label="john.doe" aria-describedby="basic-default-email2"
                                         value="{{ $dokters->user->email }}" />
                                     <span class="input-group-text" id="basic-default-email2">@example.com</span>
                                 </div>
@@ -129,6 +128,22 @@
                             <div class="col-sm-10">
                                 <textarea name="alamat" id="basic-default-message" class="form-control" placeholder="Alamat"
                                     aria-label="Hi, Do you have a moment to talk Joe?" aria-describedby="basic-icon-default-message2">{{ $dokters->alamat }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-phone">Password Lama</label>
+                            <div class="col-sm-10">
+                                <input name="old_password" type="password" id="basic-default-phone"
+                                    class="form-control phone-mask" placeholder="Password Lama" aria-label="658 799 8941"
+                                    aria-describedby="basic-default-phone" value="" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-phone">Password Baru</label>
+                            <div class="col-sm-10">
+                                <input name="new_password" type="password" id="basic-default-phone"
+                                    class="form-control phone-mask" placeholder="Password Lama" aria-label="658 799 8941"
+                                    aria-describedby="basic-default-phone" value="" />
                             </div>
                         </div>
                         <div class="row justify-content-end">

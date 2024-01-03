@@ -17,8 +17,6 @@ class PasienController extends Controller
         $pasien = Pasien::where('id_akun', Auth::user()->id)->first();
         $poli = Poli::all();
         $jadwals = Jadwal::with(['dokter', 'poli'])->get();
-        // $jadwals = Jadwal::where('id_dokter', $jadwal->dokter->id)->first();
-        // dd($jadwal);
         $cekPendaftaran = DaftarPoli::join('jadwal_periksa', 'daftar_poli.id_jadwal', '=', 'jadwal_periksa.id')
             ->join('dokter', 'jadwal_periksa.id_dokter', '=', 'dokter.id')
             ->join('poli', 'dokter.id_poli', '=', 'poli.id')
@@ -26,26 +24,13 @@ class PasienController extends Controller
             ->select('daftar_poli.*', 'jadwal_periksa.*', 'poli.*', 'dokter.*')
             ->get();
 
-        // dd($cekPendaftaran);
+        // dd($cekPendaftaran->toArray());
         return view('daftarpoli', compact('cekPendaftaran', 'pasien', 'poli', 'jadwals'));
     }
     function poliPost(Request $request)
     {
-        // $user = auth()->user()->id;
-        // $pasien = Pasien::where('id_akun', $user)->first();
-        // $jadwal = $request->input('jadwal');
-        // $keluhan = $request->input('keluhan');
-
-        // daftar_poli::create([
-        //     'id_pasien' => (int) $pasien->id,
-        //     'id_jadwal' => (int) $jadwal,
-        //     'keluhan' => $keluhan,
-        //     'no_antrian' => (int) $this->generateNoAntrian($jadwal),
-        // ]);
         $pasien = Pasien::where('id_akun', Auth::user()->id)->first();
-        // dd($request->id_poli);
-        // dd($request->all());
-        $test = DaftarPoli::create([
+        DaftarPoli::create([
             'id_pasien' => $pasien->id,
             'id_jadwal' => $request->jadwal,
             'keluhan' => $request->keluhan,

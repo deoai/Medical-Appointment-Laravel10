@@ -38,7 +38,7 @@
                         </div>
                         <div class="row justify-content-end">
                             <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary">Add Poli</button>
+                                <button type="submit" class="btn btn-primary">Add Obat</button>
                             </div>
                         </div>
                     </form>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="row justify-content-end">
                             <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary">Edit Poli</button>
+                                <button type="submit" class="btn btn-primary">Edit Obat</button>
                             </div>
                         </div>
                     </form>

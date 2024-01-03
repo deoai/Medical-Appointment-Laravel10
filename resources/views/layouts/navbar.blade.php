@@ -54,25 +54,9 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ route('profileDokter') }}">
                             <i class="bx bx-user me-2"></i>
                             <span class="align-middle">My Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="bx bx-cog me-2"></i>
-                            <span class="align-middle">Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <span class="d-flex align-items-center align-middle">
-                                <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                                <span class="flex-grow-1 align-middle ms-1">Billing</span>
-                                <span
-                                    class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                            </span>
                         </a>
                     </li>
                     <li>

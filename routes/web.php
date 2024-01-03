@@ -72,6 +72,10 @@ Route::middleware(['auth', 'check.level:dokter'])->group(function () {
     Route::put('/dokter/jadwal/{id}', [DokterController::class, 'jadwalUpdateProses'])->name('jadwal.updateProses');
     Route::delete('/dokter/jadwal/{id}', [DokterController::class, 'jadwalDelete'])->name('jadwal.delete');
     Route::get('/dokter/periksa', [DokterController::class, 'periksa'])->name('periksa');
+    Route::get('/dokter/periksa/{id}{no}', [DokterController::class, 'periksaPasien'])->name('periksaPasien');
+    Route::post('/dokter/periksa/{id}', [DokterController::class, 'periksaPasienPost'])->name('periksaPasien.post');
+    Route::get('/dokter/profile', [DokterController::class, 'profileDokter'])->name('profileDokter');
+    Route::put('/dokter/profile/{id}', [DokterController::class, 'profileDokterUpdate'])->name('profileDokter.update');
 });
 Route::middleware(['auth', 'check.level:pasien'])->group(function () {
     Route::get('/pasien/poli', [PasienController::class, 'poli'])->name('daftarpoli');

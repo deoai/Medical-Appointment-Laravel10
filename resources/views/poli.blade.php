@@ -19,14 +19,14 @@
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Nama Poli</label>
                             <div class="col-sm-10">
                                 <input type="text" name="nama_poli" class="form-control" id="basic-default-name"
-                                    placeholder="John Doe" />
+                                    placeholder="Nama" />
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Keterangan</label>
                             <div class="col-sm-10">
                                 <input type="text" name="keterangan" class="form-control" id="basic-default-name"
-                                    placeholder="John Doe" />
+                                    placeholder="Keterangan" />
                             </div>
                         </div>
                         <div class="row justify-content-end">
@@ -73,6 +73,7 @@
                     <tr>
                         <th>Nama Poli</th>
                         <th>Keterangan</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">

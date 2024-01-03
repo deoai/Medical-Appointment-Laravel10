@@ -2,20 +2,18 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8 mb-4 order-0">
+        <div class="col-lg-12 mb-4 order-0">
             <div class="card">
                 <div class="d-flex align-items-end row">
                     <div class="col-sm-7">
                         <div class="card-body">
-                            <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+                            <h5 class="card-title text-primary">Selamat Datang <span style="color:rgb(58, 52, 214)">
+                                    {{ $user->name }}</span></h5>
                             <p class="mb-4">
-                                You have done <span class="fw-medium">72%</span> more sales today.
-                                Check your new badge in
-                                your profile.
+                                Dashboard Rumah Sakit Tadika Mesra Sebagai <span
+                                    style="color:rgb(58, 52, 214)">{{ strtoupper($user->role) }}
+                                </span>
                             </p>
-
-                            <a href="javascript:;" class="btn btn-sm btn-outline-primary">View
-                                Badges</a>
                         </div>
                     </div>
                     <div class="col-sm-5 text-center text-sm-left">
@@ -29,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 order-1">
+        {{-- <div class="col-lg-4 col-md-4 order-1">
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-6 mb-4">
                     <div class="card">
@@ -84,7 +82,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Total Revenue -->
         <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
             <div class="card">
