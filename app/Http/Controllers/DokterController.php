@@ -93,6 +93,7 @@ class DokterController extends Controller
 
     function periksa()
     {
+        $action = 'none';
         $dokter = Dokter::where('id_akun', Auth::user()->id)->first();
         $jadwals = Jadwal::where('id_dokter', $dokter->id)->get();
         $daftar_poli = DaftarPoli::join('jadwal_periksa', 'daftar_poli.id_jadwal', '=', 'jadwal_periksa.id')
@@ -102,9 +103,16 @@ class DokterController extends Controller
             ->where('jadwal_periksa.id_dokter', $dokter->id)
             ->select('daftar_poli.*', 'jadwal_periksa.*', 'poli.*', 'dokter.*', 'pasien.*')
             ->get();
-        // dd($daftar_poli->toArray());
-        $action = 'none';
-
+        $cekDaftarPoli = DaftarPoli::join('jadwal_periksa', 'daftar_poli.id_jadwal', '=', 'jadwal_periksa.id')
+            ->join('dokter', 'jadwal_periksa.id_dokter', '=', 'dokter.id')
+            ->join('poli', 'dokter.id_poli', '=', 'poli.id')
+            ->join('pasien', 'daftar_poli.id_pasien', '=', 'pasien.id')
+            ->where('jadwal_periksa.id_dokter', $dokter->id)
+            ->select('jadwal_periksa.*', 'poli.*', 'dokter.*', 'pasien.*', 'daftar_poli.*')
+            ->get();
+        // dd($cekDaftarPoli->toArray());
+        $i = 0;
+        $hasilPeriksa = Periksa::all();
         $periksa = Periksa::join('daftar_poli', 'periksa.id_daftar_poli', '=', 'daftar_poli.id')
             ->join('pasien', 'daftar_poli.id_pasien', '=', 'pasien.id')
             ->join('jadwal_periksa', 'daftar_poli.id_jadwal', '=', 'jadwal_periksa.id')
@@ -122,11 +130,19 @@ class DokterController extends Controller
             ->select('detail_periksa.*', 'obat.*')
             ->get();
         // dd($periksa->toArray());
-        return view('periksa', compact('daftar_poli', 'action', 'periksa', 'detailPeriksa'));
+        return view('periksa', compact('daftar_poli', 'action', 'periksa', 'detailPeriksa', 'cekDaftarPoli', 'hasilPeriksa', 'i'));
     }
     function periksaPasien(Request $request, $id, $no_antrian)
     {
+        $hasilPeriksa = Periksa::all();
         $dokter = Dokter::where('id_akun', Auth::user()->id)->first();
+        $cekDaftarPoli = DaftarPoli::join('jadwal_periksa', 'daftar_poli.id_jadwal', '=', 'jadwal_periksa.id')
+            ->join('dokter', 'jadwal_periksa.id_dokter', '=', 'dokter.id')
+            ->join('poli', 'dokter.id_poli', '=', 'poli.id')
+            ->join('pasien', 'daftar_poli.id_pasien', '=', 'pasien.id')
+            ->where('jadwal_periksa.id_dokter', $dokter->id)
+            ->select('jadwal_periksa.*', 'poli.*', 'dokter.*', 'pasien.*', 'daftar_poli.*')
+            ->get();
         $jadwals = Jadwal::where('id_dokter', $dokter->id)->get();
         $daftar_poli = DaftarPoli::join('jadwal_periksa', 'daftar_poli.id_jadwal', '=', 'jadwal_periksa.id')
             ->join('dokter', 'jadwal_periksa.id_dokter', '=', 'dokter.id')
@@ -168,7 +184,7 @@ class DokterController extends Controller
             ->select('detail_periksa.*', 'obat.*')
             ->get();
 
-        return view('periksa', compact('daftar_poli', 'action', 'pasien', 'id', 'ket_antrian', 'no_antrian', 'tgl', 'obat', 'periksa', 'detailPeriksa'));
+        return view('periksa', compact('daftar_poli', 'action', 'pasien', 'id', 'ket_antrian', 'no_antrian', 'tgl', 'obat', 'periksa', 'detailPeriksa', 'cekDaftarPoli', 'hasilPeriksa'));
     }
 
     function periksaPasienPost(Request $request, $id)
@@ -198,7 +214,7 @@ class DokterController extends Controller
         //dari inputan obat dengan name=obat[] terpilih di form periksa tampung ke variabel $obats
         $obats = $request->obat;
         $obat = Obat::whereIn('id', $obats)->get();
-        $totalbiaya = 0;
+        $totalbiaya = 150000;
         foreach ($obat as $key => $value) {
             $totalbiaya += $value->harga;
         }
