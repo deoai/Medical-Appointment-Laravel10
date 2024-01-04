@@ -25,10 +25,8 @@ Medical Appointment is a web application that is used to make an appointment wit
 
 2. Database setup
 
-    - Create an database on phpmyadmin name
-        ```bash
-        bk
-        ```
+    - Create an database on phpmyadmin name `bk`
+    - Export sql file on folder `database` to phpmyadmin
     - Copy content of `.env.example` into new `.env` file
         ```bash
         cp .env.example .env
