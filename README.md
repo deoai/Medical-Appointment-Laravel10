@@ -54,7 +54,7 @@ Medical Appointment is a web application that is used to make an appointment wit
     php artisan serve
     ```
 
-## Login to the app:
+</br></br> 3. Login to the app:
 
 | role   | email           | password |
 | ------ | --------------- | -------- |

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Jan 2024 pada 18.33
+-- Waktu pembuatan: 07 Jan 2024 pada 20.03
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -66,7 +66,9 @@ INSERT INTO `daftar_poli` (`id`, `id_pasien`, `id_jadwal`, `keluhan`, `no_antria
 (13, 5, 10, 'Kulit bintik-bintik', 1),
 (14, 5, 10, 'Kulit melepuh', 2),
 (15, 6, 11, 'Membersihkan karang gigi', 2),
-(16, 9, 11, 'Menambal gigi bolong', 3);
+(16, 9, 11, 'Menambal gigi bolong', 3),
+(17, 5, 11, 'Kulit bintik-bintik', 4),
+(18, 5, 11, 'sakit gigi kanan', 5);
 
 -- --------------------------------------------------------
 
@@ -89,7 +91,11 @@ INSERT INTO `detail_periksa` (`id`, `id_periksa`, `id_obat`) VALUES
 (18, 11, 7),
 (19, 12, 7),
 (20, 12, 10),
-(21, 12, 11);
+(21, 12, 11),
+(24, 14, 5),
+(25, 14, 6),
+(26, 14, 13),
+(39, 19, 10);
 
 -- --------------------------------------------------------
 
@@ -126,16 +132,24 @@ CREATE TABLE `jadwal_periksa` (
   `id_dokter` int(11) UNSIGNED NOT NULL,
   `hari` enum('Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu') NOT NULL,
   `jam_mulai` time NOT NULL,
-  `jam_selesai` time NOT NULL
+  `jam_selesai` time NOT NULL,
+  `status` char(1) NOT NULL DEFAULT 'n'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `jadwal_periksa`
 --
 
-INSERT INTO `jadwal_periksa` (`id`, `id_dokter`, `hari`, `jam_mulai`, `jam_selesai`) VALUES
-(10, 8, 'Senin', '10:00:00', '12:00:00'),
-(11, 9, 'Senin', '08:00:00', '12:00:00');
+INSERT INTO `jadwal_periksa` (`id`, `id_dokter`, `hari`, `jam_mulai`, `jam_selesai`, `status`) VALUES
+(10, 8, 'Senin', '10:00:00', '12:00:00', 'y'),
+(11, 9, 'Senin', '08:00:00', '12:00:00', 'n'),
+(12, 9, 'Senin', '10:00:00', '14:00:00', 'n'),
+(13, 9, 'Rabu', '15:00:00', '17:00:00', 'n'),
+(14, 9, 'Kamis', '18:00:00', '22:00:00', 'n'),
+(15, 9, 'Senin', '22:00:00', '01:00:00', 'n'),
+(16, 9, 'Jumat', '11:11:00', '12:22:00', 'y'),
+(17, 9, 'Selasa', '05:00:00', '10:00:00', 'n'),
+(18, 9, 'Sabtu', '07:00:00', '08:00:00', 'n');
 
 -- --------------------------------------------------------
 
@@ -212,7 +226,8 @@ CREATE TABLE `pasien` (
 INSERT INTO `pasien` (`id`, `id_akun`, `nama`, `alamat`, `no_ktp`, `no_hp`, `no_rm`) VALUES
 (5, 3, 'Dhiya', 'Ungaran', '32443221124412', '087666533212', '202312-001'),
 (6, 18, 'Yudhis', 'Banyumanik', '321322211', '087655542112', '202312-002'),
-(9, 24, 'Safiar', 'Demak', '3231122887', '08655478321', '202401-003');
+(9, 24, 'Safiar', 'Demak', '3231122887', '08655478321', '202401-003'),
+(10, 27, 'Wijaya', 'Banyumanik Kota', '326645321', '0866444221', '202401-004');
 
 -- --------------------------------------------------------
 
@@ -234,7 +249,9 @@ CREATE TABLE `periksa` (
 
 INSERT INTO `periksa` (`id`, `id_daftar_poli`, `tgl_periksa`, `catatan`, `biaya_periksa`) VALUES
 (11, 11, '2024-01-04 00:24:37', 'Gigi bolong harus ditambal next periksa', 60000),
-(12, 16, '2024-01-04 00:25:22', 'Sudah ditambal', 157000);
+(12, 16, '2024-01-04 00:25:22', 'Sudah ditambal', 157000),
+(14, 15, '2024-01-04 23:10:34', 'Sudah dibersihkan, aman', 205000),
+(19, 18, '2024-01-08 01:48:30', 'harus ditambal', 214000);
 
 -- --------------------------------------------------------
 
@@ -303,7 +320,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `u
 (21, 'Dr. Aii', 'ai@mail.com', '$2y$12$E6GH3fQaI8NDV/i0NeR.IOh9JbjgxnJ5XGLO3SjY5NGk1n.WFEc1C', 'dokter', '2023-12-30 23:14:24', '2024-01-03 10:01:30'),
 (22, 'Dr. Iskan', 'iskan@mail.com', '$2y$12$2PMGqXBAfSV7w13coKGQ3eJF7DONEq.EmNSPzD7uarlrUa/mUgCa.', 'dokter', '2024-01-03 09:46:36', '2024-01-03 10:02:13'),
 (23, 'Dr. Andri', 'andri@mail.com', '$2y$12$FhE6aqnnLUzslJc6kkwnm.YcPWAWmB5WTeM1nSOENofO4goVjlzne', 'dokter', '2024-01-03 09:49:34', '2024-01-03 10:02:36'),
-(24, 'Safiar', 'safiar@mail,com', '$2y$12$DGEJ/dFgzK/i2qApLikdNOrzPFgX/9QJ6C22JtIYZvjjwMUll8nxq', 'pasien', '2024-01-03 09:50:40', '2024-01-03 09:50:40');
+(24, 'Safiar', 'safiar@mail,com', '$2y$12$DGEJ/dFgzK/i2qApLikdNOrzPFgX/9QJ6C22JtIYZvjjwMUll8nxq', 'pasien', '2024-01-03 09:50:40', '2024-01-03 09:50:40'),
+(27, 'Wijaya', 'wijaya@mail.com', '$2y$12$cAeIRQ0QaV2CmH4riVDeju1c3IJs39iDLVaMAAhIlFhWx87Zsx3P.', 'pasien', '2024-01-03 22:14:12', '2024-01-03 22:14:12');
 
 --
 -- Indexes for dumped tables
@@ -407,13 +425,13 @@ ALTER TABLE `akun`
 -- AUTO_INCREMENT untuk tabel `daftar_poli`
 --
 ALTER TABLE `daftar_poli`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_periksa`
 --
 ALTER TABLE `detail_periksa`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT untuk tabel `dokter`
@@ -425,7 +443,7 @@ ALTER TABLE `dokter`
 -- AUTO_INCREMENT untuk tabel `jadwal_periksa`
 --
 ALTER TABLE `jadwal_periksa`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -443,13 +461,13 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `periksa`
 --
 ALTER TABLE `periksa`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -467,7 +485,7 @@ ALTER TABLE `poli`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

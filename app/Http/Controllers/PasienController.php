@@ -16,7 +16,8 @@ class PasienController extends Controller
     {
         $pasien = Pasien::where('id_akun', Auth::user()->id)->first();
         $poli = Poli::all();
-        $jadwals = Jadwal::with(['dokter', 'poli'])->get();
+        $jadwals = Jadwal::with(['dokter', 'poli'])->where('status', 'y')->get();
+        // dd($jadwals->toArray());
         $cekPendaftaran = DaftarPoli::join('jadwal_periksa', 'daftar_poli.id_jadwal', '=', 'jadwal_periksa.id')
             ->join('dokter', 'jadwal_periksa.id_dokter', '=', 'dokter.id')
             ->join('poli', 'dokter.id_poli', '=', 'poli.id')

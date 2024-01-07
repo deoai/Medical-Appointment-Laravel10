@@ -30,12 +30,26 @@ class DokterController extends Controller
     {
         // dd($request->all());
         $dokter = Dokter::where('id_akun', Auth::user()->id)->first();
+        // dd($request->all());
         Jadwal::create([
             'id_dokter' => $dokter->id,
             'hari' => $request->hari,
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
+            'status' => $request->status,
         ]);
+        if ($request->status == 'y') {
+            $jadwals = Jadwal::where('id_dokter', $dokter->id)->get();
+            foreach ($jadwals as $key => $value) {
+                $value->update([
+                    'status' => 'n',
+                ]);
+            }
+            $jadwal = Jadwal::where('id', Jadwal::orderBy('id', 'desc')->first()->id)->first();
+            $jadwal->update([
+                'status' => 'y',
+            ]);
+        }
         return redirect('/dokter/jadwal');
     }
     function jadwalUpdate(Request $request, $id)
@@ -76,12 +90,26 @@ class DokterController extends Controller
     function jadwalUpdateProses(Request $request, $id)
     {
         // dd($request->all());
+        $dokter = Dokter::where('id_akun', Auth::user()->id)->first();
         $jadwal = Jadwal::where('id', $id)->first();
         $jadwal->update([
             'hari' => $request->hari,
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
+            'status' => $request->status,
         ]);
+        if ($request->status == 'y') {
+            $jadwals = Jadwal::where('id_dokter', $dokter->id)->get();
+            foreach ($jadwals as $key => $value) {
+                $value->update([
+                    'status' => 'n',
+                ]);
+            }
+            $jadwal = Jadwal::where('id', $id)->first();
+            $jadwal->update([
+                'status' => 'y',
+            ]);
+        }
         return redirect('/dokter/jadwal');
     }
     function jadwalDelete(Request $request, $id)
@@ -129,7 +157,7 @@ class DokterController extends Controller
             ->join('obat', 'detail_periksa.id_obat', '=', 'obat.id')
             ->select('detail_periksa.*', 'obat.*')
             ->get();
-        // dd($periksa->toArray());
+        // dd($cekDaftarPoli->toArray());
         return view('periksa', compact('daftar_poli', 'action', 'periksa', 'detailPeriksa', 'cekDaftarPoli', 'hasilPeriksa', 'i'));
     }
     function periksaPasien(Request $request, $id, $no_antrian)
@@ -151,12 +179,12 @@ class DokterController extends Controller
             ->where('jadwal_periksa.id_dokter', $dokter->id)
             ->select('daftar_poli.*', 'jadwal_periksa.*', 'poli.*', 'dokter.*', 'pasien.*')
             ->get();
+        $pasien = $daftar_poli->where('no_antrian', $no_antrian)->first();
         // dd($daftar_poli->toArray());
         // dd($jadwals->toArray());
         $action = 'periksa';
-        $pasien = Pasien::where('id', $id)->first();
-        //where id pasien = $id and id_jadwal = $jadwals->id
-        $ket_antrian = DaftarPoli::where('id_pasien', $id)->where('id_jadwal', $jadwals->first()->id)->first();
+        $ket_antrian = DaftarPoli::where('id', $id)->where('id_jadwal', $jadwals->first()->id)->first();
+        // dd($ket_antrian->toArray());
         // dd($pasien->toArray());
         // dd($no_antrian);
 
@@ -190,6 +218,7 @@ class DokterController extends Controller
     function periksaPasienPost(Request $request, $id)
     {
         // dd($request->all());
+        $action = 'none';
         $dokter = Dokter::where('id_akun', Auth::user()->id)->first();
         $jadwals = Jadwal::where('id_dokter', $dokter->id)->get();
         $daftar_poli = DaftarPoli::join('jadwal_periksa', 'daftar_poli.id_jadwal', '=', 'jadwal_periksa.id')
@@ -205,6 +234,7 @@ class DokterController extends Controller
         $pasien = Pasien::where('id', $id)->first();
         //where id pasien = $id and id_jadwal = $jadwals->id
         $ket_antrian = DaftarPoli::where('id_pasien', $id)->where('id_jadwal', $jadwals->first()->id)->first();
+        // dd($request->all());
         // dd($pasien->toArray());
         // dd($no_antrian);
 
@@ -221,7 +251,7 @@ class DokterController extends Controller
         // dd($request->toArray());
         //insert into 
         Periksa::create([
-            'id_daftar_poli' => $ket_antrian->id,
+            'id_daftar_poli' => $id,
             'tgl_periksa' => $tgl,
             'catatan' => $request->catatan,
             'biaya_periksa' => $totalbiaya,

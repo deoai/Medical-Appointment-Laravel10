@@ -102,67 +102,69 @@
                 </div>
             </div>
         </div>
-    @endif
+    @else
+        <div class="card">
+            <h5 class="card-header">List Pasien Saya</h5>
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>No Antrian</th>
+                            <th>Nama Pasien</th>
+                            <th>Keluhan</th>
+                            <th>Action</th>
 
-    {{-- LIST Pasien --}}
-    <div class="card">
-        <h5 class="card-header">List Pasien Saya</h5>
-        <div class="table-responsive text-nowrap">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>No Antrian</th>
-                        <th>Nama Pasien</th>
-                        <th>Keluhan</th>
-                        <th>Action</th>
-
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    @if ($cekDaftarPoli->count() > 0)
-                        @foreach ($cekDaftarPoli as $jad)
-                            <tr>
-                                <td>{{ $jad->no_antrian }}</td>
-                                <td>{{ $jad->nama }}</td>
-                                <td>{{ $jad->keluhan }}</td>
-                                <td>
-                                    {{-- jika $jad->id ada di $hasilperiksa->id_daftar_poli --}}
-                                    @foreach ($hasilPeriksa as $hasil)
-                                        @if ($jad->id == $hasil->id_daftar_poli)
-                                            <a hidden>
-                                                {{ $i = 1 }}
-                                            </a>
-                                        @break
-
-                                    @else
-                                        <a hidden>
-                                            {{ $i = 0 }}
-                                        </a>
-                                    @endif
-                                @endforeach
-                                @if ($i == 0)
-                                    <a href="{{ route('periksaPasien', [$jad->id_pasien, $jad->no_antrian]) }}"
-                                        class="btn btn-primary">Periksa</a>
-                                @else
-                                    <div>
-
-                                        <div>
-                                            Sudah Diperiksa
-                                        </div>
-                                    </div>
-                                @endif
-                            </td>
                         </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <th colspan="5" class="text-center">No Pasien</th>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @if ($cekDaftarPoli->count() > 0)
+                            @foreach ($cekDaftarPoli as $jad)
+                                <tr>
+                                    <td>{{ $jad->no_antrian }}</td>
+                                    <td>{{ $jad->nama }}</td>
+                                    <td>{{ $jad->keluhan }}</td>
+                                    <td>
+                                        {{-- jika $jad->id ada di $hasilperiksa->id_daftar_poli --}}
+                                        @foreach ($hasilPeriksa as $hasil)
+                                            @if ($jad->id == $hasil->id_daftar_poli)
+                                                <a hidden>
+                                                    {{ $i = 1 }}
+                                                </a>
+                                            @break
+
+                                        @else
+                                            <a hidden>
+                                                {{ $i = 0 }}
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                    @if ($i == 0)
+                                        <a href="{{ route('periksaPasien', [$jad->id, $jad->no_antrian]) }}"
+                                            class="btn btn-primary">Periksa</a>
+                                    @else
+                                        <div>
+
+                                            <div>
+                                                Sudah Diperiksa
+                                            </div>
+                                        </div>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <th colspan="5" class="text-center">No Pasien</th>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+@endif
+
+{{-- LIST Pasien --}}
+
 <br>
 <br>
 {{-- LIST Riwayat Pasien --}}
@@ -177,6 +179,7 @@
                     <th>Tanggal Periksa</th>
                     <th>Keluhan</th>
                     <th>Obat</th>
+                    <th>totalBiaya</th>
                     <th>Catatan</th>
                 </tr>
             </thead>
@@ -196,6 +199,7 @@
                                     @endif
                                 @endforeach
                             </td>
+                            <td>{{ 'Rp ' . number_format($riw->biaya_periksa, 0, ',', '.') }}</td>
                             <td>{{ $riw->catatan }}</td>
 
                         </tr>
