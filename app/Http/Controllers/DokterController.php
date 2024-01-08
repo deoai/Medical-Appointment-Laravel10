@@ -183,7 +183,8 @@ class DokterController extends Controller
         // dd($daftar_poli->toArray());
         // dd($jadwals->toArray());
         $action = 'periksa';
-        $ket_antrian = DaftarPoli::where('id', $id)->where('id_jadwal', $jadwals->first()->id)->first();
+        $ket_antrian = DaftarPoli::where('id', $id)->first();
+
         // dd($ket_antrian->toArray());
         // dd($pasien->toArray());
         // dd($no_antrian);
