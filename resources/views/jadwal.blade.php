@@ -12,7 +12,7 @@
                 @endif
             </div>
             <div class="card-body">
-                @if ($action == 'input')
+                @if ($action == 'input' && $active == false)
                     <form method="POST" action="{{ route('jadwal.post') }}">
                         @csrf
                         <div class="row mb-3">
@@ -63,6 +63,10 @@
                             </div>
                         </div>
                     </form>
+                @elseif ($action == 'input' && $active == true)
+                    <div>
+                        Tidak bisa Input/Edit jadwal pada hari H
+                    </div>
                 @elseif ($action == 'edit')
                     <form method="POST" action="{{ route('jadwal.updateProses', $jadwal->id) }}">
                         @csrf
@@ -151,22 +155,29 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ route('jadwal.update', $jad->id) }}"><i
-                                                    class="bx bx-edit-alt me-1"></i> Edit</a>
-                                            <form action="{{ route('jadwal.delete', $jad->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="dropdown-item" type="submit"><i
-                                                        class="bx bx-trash me-1"></i> Delete</button>
-                                            </form>
+                                    @if ($active == false)
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{ route('jadwal.update', $jad->id) }}"><i
+                                                        class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                <form action="{{ route('jadwal.delete', $jad->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="dropdown-item" type="submit"><i
+                                                            class="bx bx-trash me-1"></i> Delete</button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div>
+                                            Tidak bisa Input/Edit jadwal pada hari H
+                                        </div>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach

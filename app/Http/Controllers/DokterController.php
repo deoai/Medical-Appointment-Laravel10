@@ -24,6 +24,31 @@ class DokterController extends Controller
         $action = 'input';
         $active = false;
 
+        $today = now()->setTimezone('Asia/Jakarta')->format('l');
+        // dd($today);
+        //conver today ke bahasa indonesia
+        $todayinIndo = [
+            'Monday' => 'Senin',
+            'Tuesday' => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday' => 'Kamis',
+            'Friday' => 'Jumat',
+            'Saturday' => 'Sabtu',
+            'Sunday' => 'Minggu',
+        ];
+        $today = $todayinIndo[$today];
+        // dd($today);
+        // loop jadwals
+        foreach ($jadwals as $key => $value) {
+            // dd($value->hari);
+            // jika today == hari yang status y maka active = true
+            if ($today == $value->hari && $value->status == 'y') {
+                $active = true;
+            }
+        }
+
+        // dd($jadwals->toArray());
+
         return view('jadwal', compact('jadwals', 'action', 'active'));
     }
     function jadwalPost(Request $request)
